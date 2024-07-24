@@ -20,12 +20,18 @@ with app.app_context():
 def index():
 
     if request.method == 'POST':
+        error_msg = ""
         new_city = request.form.get('city')
 
         if new_city:
-            new_city_obj = City(name=new_city)
-            db.session.add(new_city_obj)
-            db.session.commit()
+            exist_city = City.query.filter_by(name=new_city).first()
+
+            if not exist_city:
+                new_city_obj = City(name=new_city)
+                db.session.add(new_city_obj)
+                db.session.commit()
+            else:
+                error_msg = "City already exist"
 
     cities = City.query.all()
     weather_data=[]
