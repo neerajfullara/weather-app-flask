@@ -16,6 +16,11 @@ class City(db.Model):
 with app.app_context():
     db.create_all()
 
+def get_city_weather_data(city):
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&units=imperial&appid=1e9dd8dfac35cb3e8b7090f24c07f3e3"
+    r=requests.get(url).json()
+    return r
+
 @app.route('/', methods=['GET','POST'])
 def index():
 
@@ -27,20 +32,23 @@ def index():
             exist_city = City.query.filter_by(name=new_city).first()
 
             if not exist_city:
-                new_city_obj = City(name=new_city)
-                db.session.add(new_city_obj)
-                db.session.commit()
+                new_city_data = get_city_weather_data(new_city)
+                if new_city_data['cod'] == 200:
+                    new_city_obj = City(name=new_city)
+                    db.session.add(new_city_obj)
+                    db.session.commit()
+                else:
+                    error_msg = "City doesn't exist in the world"
             else:
-                error_msg = "City already exist"
+                error_msg = "City already exist in the database!"
 
     cities = City.query.all()
     weather_data=[]
 
     # city = 'Las Vegas'
     for city in cities:
-        url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=1e9dd8dfac35cb3e8b7090f24c07f3e3"
-
-        r=requests.get(url.format(city.name)).json()
+        
+        r = get_city_weather_data(city.name)
 
         weather={
             'city': city.name,
