@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import os
@@ -6,6 +6,7 @@ import os
 app = Flask(__name__)
 app.config['DEBUG']=True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///weather.db'
+app.config['SECRET_KEY'] = 'thisisasecret'
 
 db = SQLAlchemy(app)
 
@@ -38,14 +39,18 @@ def index():
                     db.session.add(new_city_obj)
                     db.session.commit()
                 else:
-                    error_msg = "City doesn't exist in the world"
+                    error_msg = "City doesn't exists in the world"
             else:
-                error_msg = "City already exist in the database!"
+                error_msg = "City already exists in the database!"
+        
+        if error_msg:
+            flash(error_msg, 'error')
+        else:
+            flash("City added successfully!", 'success')
 
     cities = City.query.all()
     weather_data=[]
 
-    # city = 'Las Vegas'
     for city in cities:
         
         r = get_city_weather_data(city.name)
