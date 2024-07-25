@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import os
@@ -65,3 +65,12 @@ def index():
 
 
     return render_template('weatherApp.html', weather_data=weather_data)
+
+
+@app.route('/delete/<name>')
+def delete_city(name):
+    city = City.query.filter_by(name=name).first()
+    db.session.delete(city)
+    db.session.commit()
+    flash(f"City {city.name} has been deleted!", 'success')
+    return redirect(url_for('index'))
