@@ -42,3 +42,6 @@ pip install flask sqlalchemy requests
 
 ## Screenshot
 ![image](https://github.com/user-attachments/assets/150f8a80-1734-464f-bbb6-6d89ec798b55)
+
+## Acknowledgments
+Thanks to OpenWeatherMap for providing the weather data API.
