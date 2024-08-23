@@ -1,12 +1,14 @@
 # Weather App
 
-A simple Weather App built using Flask and SQLAlchemy. This application allows users to fetch and display weather details for different cities using the OpenWeatherMap API.
+A simple Weather App built using Flask and SQLAlchemy. This application allows users to fetch and display weather details for different cities using the OpenWeatherMap API. Users can search for their desired cities, add them to a list, and remove them if needed.
 
 ## Features
 
 - Fetch current weather details for a city using the OpenWeatherMap API.
-- Store user search queries in a database using SQLAlchemy.
-- Display city weather details including temperature, humidity, weather description, and more.
+- Store user search queries and a list of favorite cities in a database using SQLAlchemy.
+- Display city weather details, including temperature, humidity, weather description, and more.
+- Users can search for a city and add it to their list of tracked cities.
+- Cities can be removed from the list by clicking on the cross button next to the city name.
 
 ## Technologies Used
 
