@@ -1,5 +1,3 @@
-# weather-app-flask
-
 # Weather App
 
 A simple Weather App built using Flask and SQLAlchemy. This application allows users to fetch and display weather details for different cities using the OpenWeatherMap API.
