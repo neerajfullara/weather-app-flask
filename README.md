@@ -30,6 +30,7 @@ You can install the required Python packages using the following command:
 
 ```bash
 pip install flask sqlalchemy requests
+'''
 
 ## Usage
 - Open the app in your web browser.
